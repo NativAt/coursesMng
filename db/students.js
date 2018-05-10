@@ -6,9 +6,11 @@ mongoose.connect(`${connectionString}/university`);
 
 const db = require('../model');
 
-exports.getStudents = () => {
+exports.getStudents = ({ courseId }) => {
+    let query = {};
+    if (courseId) query = { "courses.id": courseId };
     try {
-        return db.students.find();
+        return db.students.find(query);
     } catch (err) {
         return err;
     }
@@ -50,7 +52,7 @@ exports.assignCourseToStudent = async (id, courseId) => {
 
 exports.setScoreToStudentCourse = async (id, courseId, score) => {
     try {
-        return db.students.update({ _id: id, "courses.id": 3 }, { $set: {"courses.$.score": score } }, {new: true})
+        return db.students.update({ _id: id, "courses.id": courseId }, { $set: {"courses.$.score": score } }, {new: true})
     } catch (err) {
         return err;
     }

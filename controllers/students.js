@@ -2,7 +2,7 @@ const db = require('../db/students');
 
 const getStudents = async (req, res) => {
     try {
-        const students = await db.getStudents();
+        const students = await db.getStudents(req.query);
         return res.json(students);
     } catch (err) {
         return res.status(500).send('Internal server error');
