@@ -6,9 +6,13 @@ mongoose.connect(`${connectionString}/university`);
 
 const db = require('../model');
 
-exports.getStudents = ({ courseId }) => {
+exports.getStudents = ({ courseId, age, name, avg }) => {
     let query = {};
-    if (courseId) query = { "courses.id": courseId };
+    if (courseId) Object.assign(query, { "courses.id": courseId });
+    if (age) Object.assign(query, { age });
+    if (name) Object.assign(query, { name });
+   
+
     try {
         return db.students.find(query);
     } catch (err) {
@@ -53,6 +57,15 @@ exports.assignCourseToStudent = async (id, courseId) => {
 exports.setScoreToStudentCourse = async (id, courseId, score) => {
     try {
         return db.students.update({ _id: id, "courses.id": courseId }, { $set: {"courses.$.score": score } }, {new: true})
+    } catch (err) {
+        return err;
+    }
+};
+
+
+exports.getTopStudents = async () => {
+    try {
+        return db.students.aggregate([{ $unwind: "$courses" }, { $group: { _id: "$_id", avgAge: {  $avg : "$courses.score" } } }, { $match: { avgAge: { $gt: 90 } } }, { $sort : { avgAge: 1 } }]);
     } catch (err) {
         return err;
     }

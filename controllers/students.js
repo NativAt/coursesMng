@@ -5,7 +5,7 @@ const getStudents = async (req, res) => {
         const students = await db.getStudents(req.query);
         return res.json(students);
     } catch (err) {
-        return res.status(500).send('Internal server error');
+        return res.status(500).send('Internal server error' + err);
     } 
 }
 
@@ -65,7 +65,14 @@ const setScoreToStudentCourse = async (req, res) => {
     }
 }
 
-
+const getTopStudents = async (req, res) => {
+    try {
+        const students = await db.getTopStudents();
+        return res.json(students);
+    } catch (err) {
+        return res.status(500).send('Internal server error');
+    }
+}
 
 module.exports = {
     getStudents,
@@ -73,5 +80,6 @@ module.exports = {
     updateStudent,
     deleteStudent,
     assignCourseToStudent,
-    setScoreToStudentCourse
+    setScoreToStudentCourse,
+    getTopStudents
 }
