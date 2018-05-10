@@ -47,3 +47,11 @@ exports.assignCourseToStudent = async (id, courseId) => {
         return err;
     }
 };
+
+exports.setScoreToStudentCourse = async (id, courseId, score) => {
+    try {
+        return db.students.update({ _id: id, "courses.id": 3 }, { $set: {"courses.$.score": score } }, {new: true})
+    } catch (err) {
+        return err;
+    }
+};

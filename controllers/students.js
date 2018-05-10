@@ -54,6 +54,17 @@ const assignCourseToStudent = async (req, res) => {
     }
 }
 
+const setScoreToStudentCourse = async (req, res) => {
+    try {
+        if (!req.params.id || !req.params.courseId || !req.body.score) 
+            return res.status(400).send('Required fields are missing!');
+        const student = await db.setScoreToStudentCourse(req.params.id, req.params.courseId, req.body.score);
+        return res.json(student);
+    } catch (err) {
+        return res.status(500).send('Internal server error');
+    }
+}
+
 
 
 module.exports = {
@@ -61,5 +72,6 @@ module.exports = {
     createStudent,
     updateStudent,
     deleteStudent,
-    assignCourseToStudent
+    assignCourseToStudent,
+    setScoreToStudentCourse
 }

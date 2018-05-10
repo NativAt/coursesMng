@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 var ObjectIdSchema = Schema.ObjectId;
 
 const StudentCourseSchema = new Schema({
-    id:    { type: String },
+    id:    { type: Number },
     score: { type: Number },
 }, { _id : false });
 
