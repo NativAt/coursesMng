@@ -1,4 +1,4 @@
-const db = require('../db');
+const db = require('../db/courses');
 
 const getCourses = async (req, res) => {
     const courses = await db.getCourses();
@@ -31,10 +31,10 @@ const deleteCourse = async (req, res) => {
     try {
         if (!req.params.id) 
             return res.status(400).send('Required fields are missing!');
-        const students = await db.deleteStudent(req.params.id);
-        return res.staus(200).end();
+        const students = await db.deleteCourse(req.params.id);
+        return res.status(200).end();
     } catch (err) {
-        return res.status(500).send('Internal server error');
+        return res.status(500).send('Internal server error' + err);
     }
 }
 
