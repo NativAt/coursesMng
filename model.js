@@ -5,7 +5,7 @@ var ObjectIdSchema = Schema.ObjectId;
 const StudentCourseSchema = new Schema({
     id:    { type: String },
     score: { type: Number },
-});
+}, { _id : false });
 
 const StudentSchema = new Schema({
     _id:     { type: ObjectIdSchema, auto: true },

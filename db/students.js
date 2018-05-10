@@ -39,3 +39,11 @@ exports.deleteStudent = async (id) => {
         return err;
     }
 };
+
+exports.assignCourseToStudent = async (id, courseId) => {
+    try {
+        return db.students.findByIdAndUpdate(id, { $push: {courses: { id: courseId } } }, {new: true});
+    } catch (err) {
+        return err;
+    }
+};

@@ -7,7 +7,7 @@ const getCourses = async (req, res) => {
 
 const createCourse = async (req, res) => {
     try {
-        if (!req.body.name && !req.body.creditScores) 
+        if (!req.body.name || !req.body.creditScores) 
             return res.status(400).send('Required fields are missing!');
         const students = await db.createCourse(req.body.name, req.body.creditScores);
         return res.json(students);

@@ -11,7 +11,7 @@ const getStudents = async (req, res) => {
 
 const createStudent = async (req, res) => {
     try {
-        if (!req.body.name && !req.body.age) 
+        if (!req.body.name || !req.body.age) 
             return res.status(400).send('Required fields are missing!');
         const students = await db.createStudent(req.body.name, req.body.age);
         return res.json(students);
@@ -43,9 +43,23 @@ const deleteStudent = async (req, res) => {
     }
 }
 
+const assignCourseToStudent = async (req, res) => {
+    try {
+        if (!req.params.id || !req.params.courseId) 
+            return res.status(400).send('Required fields are missing!');
+        const students = await db.assignCourseToStudent(req.params.id, req.params.courseId);
+        return res.status(200).end();
+    } catch (err) {
+        return res.status(500).send('Internal server error');
+    }
+}
+
+
+
 module.exports = {
     getStudents,
     createStudent,
     updateStudent,
-    deleteStudent
+    deleteStudent,
+    assignCourseToStudent
 }
