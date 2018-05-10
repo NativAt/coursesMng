@@ -32,6 +32,9 @@ const deleteCourse = async (req, res) => {
         if (!req.params.id) 
             return res.status(400).send('Required fields are missing!');
         const students = await db.deleteCourse(req.params.id);
+
+        if (!students) return res.status(400).send('Course can not be deleted.');
+
         return res.status(200).end();
     } catch (err) {
         return res.status(500).send('Internal server error' + err);

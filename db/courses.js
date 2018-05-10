@@ -35,6 +35,9 @@ exports.updateCourse = async (id, name, creditScores) => {
 
 exports.deleteCourse = async (id) => {
     try {
+        const students = db.students.find({ "courses.id": id });
+
+        if (students) return null;
         return db.courses.findByIdAndRemove(id);
     } catch (err) {
         return err;
